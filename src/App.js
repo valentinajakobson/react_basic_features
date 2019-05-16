@@ -1,26 +1,57 @@
-import React from 'react';
-import logo from './logo.svg';
+import React , {Component} from 'react';
 import './App.css';
+import UserInput from './UserInput/UserInput';
+import UserOutput from './UserOutput/UserOutput';
 
-function App() {
+class App extends Component {
+
+  state = {
+    usernames: [
+    {id: '1', username:"Batman"},
+    {id: '2', username:"Catwoman"},
+    {id: '3', username:"Spiderman"}
+  ]
+};
+
+
+inputNameHandler = event => {
+  this.setState({
+    usernames: [
+      {username:event.target.value},
+      {username:"Catwoman"},
+      {username:"Spiderman"}
+  ]
+  })
+}
+
+  render() {
+    const pStyle = {
+      color: 'blue',
+      fontSize: '16px',
+      fontFamily: 'Kodchasan',
+    }
+
+    let userOut = null;
+
+      userOut = (
+      <div>
+        {this.state.usernames.map((u,index) => {
+          return <UserOutput
+          key = {u.id}
+          username = {u.username}
+
+          />;
+        })}
+      </div>
+      )
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="App" style={pStyle} >
+      <UserInput changeUsername = {this.inputNameHandler} username = {this.state.usernames[0].username} />
+    {userOut}
     </div>
   );
+  }
 }
 
 export default App;
